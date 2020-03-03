@@ -171,7 +171,7 @@ First, you’ll need to get the ARN for the custom authorizer that you deployed 
 get that by logging into AWS and going to your Lambda functions. Find the name for your custom
 authorizer, click on it, and grab the entire ARN in the upper right corner of the screen.
 
-![amazon lambda arn](assets\amazon-lambda-arn-1.jpg)
+![amazon lambda arn](./assets/amazon-lambda-arn-1.jpg)
 
 ## AWS Lambda Function console
 
@@ -180,7 +180,7 @@ not the custom authorizer serverless.yml file). For any http path and/or method 
 validate a Firebase client generated token on, just add the authorizer property with the ARN name
 for you custom authorizer.
 
-![serverless.yml configuration for custom authorizer](assets\serverless-yml-2.jpg)
+![serverless.yml configuration for custom authorizer](./assets/serverless-yml-2.jpg)
 
 Once your serverless.yml has been updated, deploy your API using serverless. When you check the API
 Gateway, you will see that authorization has been added to all the methods and paths where you have
