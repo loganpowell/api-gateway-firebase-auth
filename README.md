@@ -232,3 +232,5 @@ creation, deployment, or processing of responses from the API Gateway:
   [when, and when not, to use custom authorizers](https://www.alexdebrie.com/posts/lambda-custom-authorizers)
 - Configuring
   [custom responses from API Gateway](https://github.com/SeptiyanAndika/serverless-custom-authorizer)
+
+# [FURTHER READING](https://www.alexdebrie.com/posts/lambda-custom-authorizers/)
