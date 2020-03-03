@@ -113,24 +113,29 @@ The code is effectively a fork of the excellent sample that the serverless team 
 can be found here –
 https://github.com/serverless/examples/tree/master/aws-node-auth0-custom-authorizers-api
 
-Prerequisites Using the custom authorizer assumes the following:
+## Prerequisites
 
-You have installed the serverless framework via npm, preferably globally. You have created an IAM
-user and user profile for your AWS serverless project deployment. You can learn more about creating
-AWS user profiles in their documentation here –
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html. Serverless also has
-excellent documentation on setting up AWS credentials here –
-https://serverless.com/framework/docs/providers/aws/guide/credentials/. You are using Firebase to
-authenticate users and already have a Firebase project created. You can learn more about Firebase
-projects here – https://firebase.google.com/docs/projects/learn-more. Creating the Custom Authorizer
+### Using the custom authorizer assumes the following:
+
+1. You have installed the serverless framework via npm, preferably globally.
+2. You have created an IAM user and user profile for your AWS serverless project deployment. You can
+   learn more about creating AWS user profiles in their documentation here –
+   https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html. Serverless also has
+   excellent documentation on setting up AWS credentials here –
+   https://serverless.com/framework/docs/providers/aws/guide/credentials/.
+3. You are using Firebase to authenticate users and already have a Firebase project created. You can
+   learn more about Firebase projects here – https://firebase.google.com/docs/projects/learn-more.
+
+## Creating the Custom Authorizer
+
 To create a custom authorizer for your API Gateway instance, clone or download the custom authorizer
 GitHub repository, located here – https://github.com/gborodaty/api-gateway-firebase-auth.
 
 Once the files are in your local development area, you will need to create two files, an
-environment.json and serviceAccountKey,json. Here are the contents for each:
+`environment.json` and `serviceAccountKey,json`. Here are the contents for each:
 
-The environment.json contains information specific to your AWS serverless environment and is used in
-the serverless.yml configuration file. There’s also some information from the Google Firebase
+The `environment.json` contains information specific to your AWS serverless environment and is used
+in the serverless.yml configuration file. There’s also some information from the Google Firebase
 project settings that’s used in the function handler. In your IDE, open up the file, and put in the
 following variables:
 
@@ -142,10 +147,10 @@ following variables:
 }
 ```
 
-Obtain the serviceAccountKeys from Google Firebase for the firebase admin SDK for your project. You
-can follow Google’s documentation here to get your keys –
+Obtain the `serviceAccountKeys` from Google Firebase for the firebase admin SDK for your project.
+You can follow Google’s documentation here to get your keys –
 https://firebase.google.com/docs/admin/setup#initialize_the_sdk. Once you have the file, move it
-into the directory and rename it to ‘serviceAccountKey.json’. Once you have these files in place,
+into the directory and rename it to `serviceAccountKey.json`. Once you have these files in place,
 make sure you have them in your .gitignore. You do not want to commit these to the repository. The
 repository is already setup to ignore them, so you shouldn’t have to add them, but it’s worth
 double-checking to confirm.
@@ -157,22 +162,25 @@ Once these files are in place, you can deploy the custom authorizer using the se
 command. The final step is configuring the API Gateway via the serverless framework to use the newly
 minted custom authorizer to validate the Firebase generated client authorization tokens.
 
-Configuring the API Gateway While you could setup the custom authorizer using the API Gateway
-console, it is better to use the serverless framework if you use that to deploy your API
-microservice Lambda functions.
+## Configuring the API Gateway
+
+While you could setup the custom authorizer using the API Gateway console, it is better to use the
+serverless framework if you use that to deploy your API microservice Lambda functions.
 
 First, you’ll need to get the ARN for the custom authorizer that you deployed to AWS above. You can
 get that by logging into AWS and going to your Lambda functions. Find the name for your custom
 authorizer, click on it, and grab the entire ARN in the upper right corner of the screen.
 
-AWS Lambda Function console
+![amazon lambda arn](assets\amazon-lambda-arn-1.jpg)
+
+## AWS Lambda Function console
 
 Then go to the serverless configuration file that is used to deploy the API Lambda function (this is
 not the custom authorizer serverless.yml file). For any http path and/or method that you want to
 validate a Firebase client generated token on, just add the authorizer property with the ARN name
 for you custom authorizer.
 
-serverless.yml configuration for custom authorizer
+![serverless.yml configuration for custom authorizer](assets\serverless-yml-2.jpg)
 
 Once your serverless.yml has been updated, deploy your API using serverless. When you check the API
 Gateway, you will see that authorization has been added to all the methods and paths where you have
@@ -186,8 +194,9 @@ payload, to your API Lambda function for further processing.
 Here are some additional resources that may be useful if you run into any issues during the
 creation, deployment, or processing of responses from the API Gateway:
 
-Serverless documentation –
-https://serverless.com/framework/docs/providers/aws/events/apigateway/#http-endpoints-with-custom-authorizers
-Background information on when, and when not, to use custom authorizers: –
-https://www.alexdebrie.com/posts/lambda-custom-authorizers Configuring custom responses from API
-Gateway – https://github.com/SeptiyanAndika/serverless-custom-authorizer
+- Serverless documentation –
+  https://serverless.com/framework/docs/providers/aws/events/apigateway/#http-endpoints-with-custom-authorizers
+- Background information on when, and when not, to use custom authorizers: –
+  https://www.alexdebrie.com/posts/lambda-custom-authorizers
+- Configuring custom responses from API Gateway –
+  https://github.com/SeptiyanAndika/serverless-custom-authorizer
